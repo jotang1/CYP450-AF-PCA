@@ -42,9 +42,9 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
 4. Prerequisites & Installation
    The script is written in base R to ensure maximum portability across HPC environments (e.g., OSC Pitzer/Owens clusters) with minimal dependency bloat.
    Required R Libraries:
-   - stats (Standard)
-   - graphics (Standard)
-   - grDevices (Standard)
+    - stats (Standard)
+    - graphics (Standard)
+    - grDevices (Standard)
 
 5. Usage
    (1) Ensure the dataset (e.g., alphafold_data_mining_set_XXX.csv) is in the working directory.
@@ -55,9 +55,9 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
 
     (3) The pipeline will generate the following outputs:
    
-        - cyp_pca_diagnostic_plot.png: The primary PCA cluster map.
-        - dendrogram_structural_conformations.png: The hierarchical structural tree.
-        - logistic_regression_results.csv: A table of Odds Ratios for manuscript reporting.
+        cyp_pca_diagnostic_plot.png: The primary PCA cluster map.
+        dendrogram_structural_conformations.png: The hierarchical structural tree.
+        logistic_regression_results.csv: A table of Odds Ratios for manuscript reporting.
 
 7. Data Availability Note
-   The current repository includes a sample_data.csv containing 20 representative targets for code verification. The full benchmarking dataset (n=999) is  currently withheld and will be released upon peer-reviewed publication of the accompanying manuscript.
+   The current repository includes a sample_data.csv containing representative targets for code verification. The full benchmarking dataset (n=999) is  currently withheld and will be released upon peer-reviewed publication of the accompanying manuscript.
