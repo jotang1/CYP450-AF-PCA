@@ -19,3 +19,5 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
   
 5. System Architecture
    Processed 993 targets in XX seconds on OSC clusters.
+
+6. The full benchmarking dataset of 999 Cytochrome P450 structures will be released upon peer-reviewed publication.
