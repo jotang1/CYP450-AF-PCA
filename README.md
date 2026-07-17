@@ -48,12 +48,16 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
 
 5. Usage
    (1) Ensure the dataset (e.g., alphafold_data_mining_set_XXX.csv) is in the working directory.
+   
    (2) Run the script via RStudio or the terminal:
-           Rscript cyp_pca_pipeline.R
-   (3) The pipeline will generate the following outputs:
-       - cyp_pca_diagnostic_plot.png: The primary PCA cluster map.
-       - dendrogram_structural_conformations.png: The hierarchical structural tree.
-       - logistic_regression_results.csv: A table of Odds Ratios for manuscript reporting.
 
-6. Data Availability Note
+            Rscript cyp_pca_pipeline.R
+
+    (3) The pipeline will generate the following outputs:
+   
+        - cyp_pca_diagnostic_plot.png: The primary PCA cluster map.
+        - dendrogram_structural_conformations.png: The hierarchical structural tree.
+        - logistic_regression_results.csv: A table of Odds Ratios for manuscript reporting.
+
+7. Data Availability Note
    The current repository includes a sample_data.csv containing 20 representative targets for code verification. The full benchmarking dataset (n=999) is  currently withheld and will be released upon peer-reviewed publication of the accompanying manuscript.
