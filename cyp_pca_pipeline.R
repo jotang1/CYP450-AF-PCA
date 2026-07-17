@@ -1,7 +1,7 @@
 # =====================================================================
 # PROJECT: CYP450-AF-PCA
 # PURPOSE: PCA-Driven Diagnostic Pipeline for AlphaFold Structural Auditing
-# AUTHOR: [Your Name] | Ohio Supercomputer Center (OSC)
+# AUTHOR: Joseph Tang| Ohio Supercomputer Center (OSC)
 # VERSION: 1.0.1 (Production/GitHub Release)
 # =====================================================================
 
