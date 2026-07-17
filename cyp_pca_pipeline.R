@@ -9,7 +9,12 @@
 # Section 1: DATA PREPARATION & CLEANING
 # ---------------------------------------------------------------------
 # Load dataset
-df <- read.csv("alphafold_data_mining_set_1000.csv")
+# Check if sample data or full data is present
+if (file.exists("alphafold_data_mining_set_1000.csv")) {
+  df <- read.csv("alphafold_data_mining_set_1000.csv")
+} else {
+  df <- read.csv("sample_data.csv")
+}
 
 # Clean pocket volume data (remove '%' and cast to numeric)
 df$Pocket_Volume_Change_vs_PDB_Percent <- as.numeric(gsub("%", "", df$Pocket_Volume_Change_vs_PDB_Percent))
