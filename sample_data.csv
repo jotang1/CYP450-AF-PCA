@@ -1,0 +1,21 @@
+UniProt_ID,Taxonomic_Domain,Organism_Name,Pocket_Mean_pLDDT,Pocket_Min_pLDDT,Global_Mean_pLDDT,Pocket_Volume_Change_vs_PDB_Percent,Pocket_Distortion_Status
+A0R4Q6,Bacteria,Mycolicibacterium smegmatis (strain ATCC 700084 / mc(2)155),98.09,95.56,94.62,-6.2%,0
+A0R4Y3,Bacteria,Mycolicibacterium smegmatis (strain ATCC 700084 / mc(2)155),98.27,96.06,92.69,-4.6%,0
+A2A974,Eukaryota,Mus musculus,96.81,86.38,92.96,,
+A2QTW5,Eukaryota,Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513),97.21,92.19,94.04,,
+A8WGA0,Eukaryota,Danio rerio,91.80,65.56,85.29,,
+A9FDB7,Bacteria,Sorangium cellulosum (strain So ce56),98.55,97.56,98.26,-83.1%,1
+B1NF19,Eukaryota,Argemone mexicana,93.01,64.88,90.25,,
+B2RXA7,Eukaryota,Mus musculus,87.94,40.06,89.20,,
+B8N2C8,Eukaryota,Aspergillus flavus (strain ATCC 200026 / FGSC A1120 / IAM 13836 / NRRL 3357 / JCM 12722 / SRRC 167),90.13,56.50,92.76,,
+B8NFL5,Eukaryota,Aspergillus flavus (strain ATCC 200026 / FGSC A1120 / IAM 13836 / NRRL 3357 / JCM 12722 / SRRC 167),79.76,42.97,87.85,,
+B8NUK6,Eukaryota,Aspergillus flavus (strain ATCC 200026 / FGSC A1120 / IAM 13836 / NRRL 3357 / JCM 12722 / SRRC 167),88.60,51.56,92.58,,
+B8QHP1,Eukaryota,Starmerella bombicola,95.95,88.25,90.61,,
+B9DFU2,Eukaryota,Arabidopsis thaliana,96.40,92.25,89.41,,
+C0SPF7,Eukaryota,Bombyx mori,96.08,91.31,93.65,,
+C4B644,Bacteria,Pseudonocardia autotrophica,97.93,80.38,97.09,-9.5%,1
+C9ZDC6,Bacteria,Streptomyces scabiei (strain 87.22),96.71,90.12,93.24,-3.2%,0
+D8LQS7,Eukaryota,Ectocarpus siliculosus,89.24,52.47,84.77,,
+E0D207,Bacteria,Streptomyces halstedii,98.14,90.38,94.75,-1.9%,0
+E9Q5K4,Eukaryota,Mus musculus,96.02,92.12,92.05,,
+E9Q816,Eukaryota,Mus musculus,96.20,87.75,92.31,,
