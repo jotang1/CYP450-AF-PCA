@@ -32,9 +32,11 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
 
 ## cyp_pca_pipeline.R | Structural Consonance Diagnostic Script
 1. Overview
+   
    This R-based analytical pipeline is designed to perform dimensionality reduction (PCA) and unsupervised clustering (Hierarchical/K-Means) on AlphaFold- predicted protein structures. Specifically, it identifies "Structural Dissonance"—cases where global scaffold confidence (pLDDT) remains high while the functional active site (substrate recognition sites) exhibits structural collapse or physical impossibility.
 
 2. Theoretical Framework
+   
    The script utilizes a dual-axis Principal Component Analysis (PCA) to audit AlphaFold outputs:
    - PC1 (Global Confidence): Captures the overall folding stability of the protein scaffold.
    - PC2 (Scaffold-to-Pocket Divergence): Maps the decoupling of local active-site confidence from the global fold.
@@ -44,12 +46,14 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
    - Pathway B (Stiff Cage): Overly rigid, non-productive geometries that fail to accommodate heme-thiolate biophysics.
 
 3. Key Technical Features
+   
    - Automated Data Sanitization: Handles raw CSV exports, cleans percentage strings, and filters missing structural benchmarks.
    - Multi-Model Clustering: Executes both Ward’s D2 Hierarchical Clustering (for structural taxonomy) and K-Means (for phenotype partitioning).
    - Publication-Quality Artifacts: Automatically generates high-resolution .png and .pdf diagnostic plots, including PCA loading vectors (Biplots) and cluster  dendrograms.
    - Statistical Risk Assessment: Runs a logistic regression model to calculate Odds Ratios for structural distortion based on pLDDT variance.
 
 4. Prerequisites & Installation
+   
    The script is written in base R to ensure maximum portability across HPC environments (e.g., OSC clusters) with minimal dependency bloat.
    Required R Libraries:
     - stats (Standard)
@@ -57,6 +61,7 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
     - grDevices (Standard)
 
 5. Usage
+   
    (1) Ensure the dataset (e.g., alphafold_data_mining_set_XXX.csv) is in the working directory.
    
    (2) Run the script via RStudio or the terminal:
@@ -69,5 +74,17 @@ A PCA-driven diagnostic pipeline for auditing structural consonance and function
         dendrogram_structural_conformations.png: The hierarchical structural tree.
         logistic_regression_results.csv: A table of Odds Ratios for manuscript reporting.
 
+6. Discovery through the data mining pipeline:
+   
+   We have successfully calibrated a KNN Classifier across 86 experimental structural benchmarks. When deployed to scan the remaining 913 uncharacterized CYP450 structures, as illutrstaed below, 50.7% (463 / 913) targets residue within a regime of Structural Consonance, where local active-site confidence remains in strict alignment with global scaffold stability, and 35.7% (326 / 913) targests in Transtional Stability, and 13.6% (124 /913) targets are in the Structural Dissonance regime.
+
+   Table: KNN DISCOVERY PHASE RESULTS
+   -------------------------------------------
+   - Total Uncharacterized Proteins Scanned: 913
+   - Structural Consonance Proteins: 463
+   - Transitional Stability Proteins: 326
+   - Structural Dissonance Proteins: 124
+ 
 7. Data Availability Note
+   
    The current repository includes a sample_data.csv containing representative targets for code verification. The full benchmarking dataset (n=999) is  currently withheld and will be released upon peer-reviewed publication of the accompanying manuscript.
