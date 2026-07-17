@@ -116,7 +116,7 @@ def extract_and_compare_geometry(af_path, crystal_id):
 
 # --- Pipeline Initialization ---
 input_file = "cytochrome_ids.txt"
-output_csv = "alphafold_data_mining_set.csv"
+output_csv = "alphafold_data_mining_set_1000.csv"
 
 # Load UniProt IDs
 if not os.path.exists(input_file):
