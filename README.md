@@ -1,90 +1,44 @@
-# CYP450-AF-PCA
-A PCA-driven diagnostic pipeline for auditing structural consonance and functional viability in AlphaFold-predicted Cytochrome P450 enzymes.
+# CYP450-AF-PCA: An Automated Diagnostic Pipeline for AlphaFold Structural Auditing
+## Project Overview
+CYP450-AF-PCA is a high-throughput computational framework designed to audit the structural reliability of AlphaFold 2 (AF2) predictions within the Cytochrome P450 superfamily.
 
-1. Structural Consonance Diagnostic Pipeline
-   AlphaFold (AF2/AF3) produces high-confidence scaffolds but can 'hallucinate' pocket geometries in cofactor-dependent enzymes. This pipeline uses Principal Component Analysis (PCA) to decouple global structural confidence (PC1) from local pocket divergence (PC2), identifying 124 distinct outlier phenotypes (Loop Failures and Stiff Cages).
+While AF2 provides high-confidence global scaffolds, it frequently fails to reconcile the structural plasticity of the P450 active site with the volumetric requirements of the heme prosthetic group. This pipeline identifies "Structural Dissonance"—cases where high global confidence masks localized functional failures—using a combination of PCA-driven diagnostics and supervised machine learning.
 
-2. Key Features
-   - HPC-Ready: Optimized for high-throughput scanning of thousands of PDB files.
-   - Automated Triage: Uses KNN-clustering to categorize targets into Structural Consonance or Structural Dissonance (Pathway A/B).
-   - Multi-Language: Python-based pLDDT extraction + R-based statistical visualization.
+## System Architecture & Pipeline
+The pipeline is optimized for High-Performance Computing (HPC) environments (e.g., Ohio Supercomputer Center) and is divided into three functional layers:
+1. Data Mining & Benchmarking (Python)
+   - get_ids.py: Automated retrieval of 999 UniProtKB Cytochrome P450 identifiers.
+   - build_dataset.py: Core engine for fetching AlphaFold coordinates and cross-referencing against experimental PDB crystal structures. It calculates local pLDDT metrics and geometric RMSD deviations.
+2. Unsupervised Auditing (R)
+   - cyp_pca_pipeline.R: Performs dimensionality reduction (PCA) to decouple global confidence (PC1) from local pocket stability (PC2). Includes Hierarchical Clustering (Ward’s D2) to map the structural taxonomy of the dataset.
+3. Supervised Predictive Modeling (Python/Scikit-Learn)
+   - compare_cyp_models.py: Benchmarks Random Forest, SVM, and KNN classifiers to identify the most accurate predictor of structural failure.
+   - cyp_ml_pipeline.py: Implements the validated Random Forest model and extracts feature importance rankings.
+   - run_knn_discovery.py: The "Discovery Engine" that partitions uncharacterized targets into functional tiers (Consonance vs. Dissonance).
 
-3. The Diagnostic Framework
-   - Structural Consonance: High global/local agreement (n=463).
-   - Pathway A (Loop Failure): Low local confidence despite stable scaffold.
-   - Pathway B (Stiff Cage): High confidence but biophysically rigid/inaccessible pocket.
+## Key Findings (999 Target Scan)
+| Structural Phenotype | Count (n=913) | Biophysical Interpretation |
+| :--- | :---: | :--- |
+| **Structural Consonance** | 463 | Validated high-fidelity models; scaffold/pocket alignment. |
+| **Transitional Stability** | 326 | Moderate risk; requires conformational relaxation (MD). |
+| **Scaffold-Pocket Divergence** | 124 | **Outlier Phenotype**: Likely structural hallucination. |
 
-4. Installation & Usage
-   
-   For R:
-   - stats, graphics (Standard)
-   - factoextra or cluster
-   
-   For Python (build_dataset.py):
-   - biopython
-   - requests
-   - numpy
-  
-6. Performance Metrics:
-   - Data Mining (Python): ~3 seconds per target (API limited).
-   - Analysis (R PCA/KNN): < 0.5 seconds for the full 999-target dataset on a single core.
-   - Scalability: The pipeline is designed for parallel execution across OSC clusters.
+  - Pathway A (113 targets): Localized Loop Failures (SRS regions).
+  - Pathway B (11 targets): "Stiff Cage" artifacts; biophysically non-productive geometries.
 
-## cyp_pca_pipeline.R | Structural Consonance Diagnostic Script
-1. Overview
-   
-   This R-based analytical pipeline is designed to perform dimensionality reduction (PCA) and unsupervised clustering (Hierarchical/K-Means) on AlphaFold- predicted protein structures. Specifically, it identifies "Structural Dissonance"—cases where global scaffold confidence (pLDDT) remains high while the functional active site (substrate recognition sites) exhibits structural collapse or physical impossibility.
+## Getting Started
+### Data Availability Note
+  - For academic evaluation, a representative subset (n=20) is provided in sample_data.csv. 
+  - The full benchmarking dataset (n=999) is currently under research embargo pending manuscript submission.
+### Prerequisites
+  - Python 3.8+: biopython, requests, pandas, scikit-learn, numpy, matplotlib
+  - R 4.0+: stats, graphics
+### Usage
+  1. Initialize Dataset: python build_dataset.py
+  2. Run PCA Diagnostic: Rscript cyp_pca_pipeline.R
+  3. Execute ML Discovery: python run_knn_discovery.py
 
-2. Theoretical Framework
-   
-   The script utilizes a dual-axis Principal Component Analysis (PCA) to audit AlphaFold outputs:
-   - PC1 (Global Confidence): Captures the overall folding stability of the protein scaffold.
-   - PC2 (Scaffold-to-Pocket Divergence): Maps the decoupling of local active-site confidence from the global fold.
-   By projecting 999 Cytochrome P450 targets into this space, we categorize models into three distinct phenotypes:
-   - Structural Consonance: High-fidelity models where the scaffold and pocket are in alignment.
-   - Pathway A (Loop Failure): High-confidence scaffolds with collapsed/volatile substrate recognition loops.
-   - Pathway B (Stiff Cage): Overly rigid, non-productive geometries that fail to accommodate heme-thiolate biophysics.
-
-3. Key Technical Features
-   
-   - Automated Data Sanitization: Handles raw CSV exports, cleans percentage strings, and filters missing structural benchmarks.
-   - Multi-Model Clustering: Executes both Ward’s D2 Hierarchical Clustering (for structural taxonomy) and K-Means (for phenotype partitioning).
-   - Publication-Quality Artifacts: Automatically generates high-resolution .png and .pdf diagnostic plots, including PCA loading vectors (Biplots) and cluster  dendrograms.
-   - Statistical Risk Assessment: Runs a logistic regression model to calculate Odds Ratios for structural distortion based on pLDDT variance.
-
-4. Prerequisites & Installation
-   
-   The script is written in base R to ensure maximum portability across HPC environments (e.g., OSC clusters) with minimal dependency bloat.
-   Required R Libraries:
-    - stats (Standard)
-    - graphics (Standard)
-    - grDevices (Standard)
-
-5. Usage
-   
-   (1) Ensure the dataset (e.g., alphafold_data_mining_set_XXX.csv) is in the working directory.
-   
-   (2) Run the script via RStudio or the terminal:
-
-            Rscript cyp_pca_pipeline.R
-
-    (3) The pipeline will generate the following outputs:
-   
-        cyp_pca_diagnostic_plot.png: The primary PCA cluster map.
-        dendrogram_structural_conformations.png: The hierarchical structural tree.
-        logistic_regression_results.csv: A table of Odds Ratios for manuscript reporting.
-
-6. Discovery through the data mining pipeline:
-   
-   We have successfully calibrated a KNN Classifier across 86 experimental structural benchmarks. When deployed to scan the remaining 913 uncharacterized CYP450 structures, as illutrstaed below, 50.7% (463 / 913) targets residue within a regime of Structural Consonance, where local active-site confidence remains in strict alignment with global scaffold stability, and 35.7% (326 / 913) targests in Transtional Stability, and 13.6% (124 /913) targets are in the Structural Dissonance regime.
-
-   Table: KNN DISCOVERY PHASE RESULTS
-   -------------------------------------------
-   - Total Uncharacterized Proteins Scanned: 913
-   - Structural Consonance Proteins: 463
-   - Transitional Stability Proteins: 326
-   - Structural Dissonance Proteins: 124
- 
-7. Data Availability Note
-   
-   The current repository includes a sample_data.csv containing representative targets for code verification. The full benchmarking dataset (n=999) is  currently withheld and will be released upon peer-reviewed publication of the accompanying manuscript.
+### Author
+Joseph Tang <br>
+HPC Storage Engineer, Ohio Supercomputer Center <br>
+Specializing in the intersection of HPC Systems and Structural Bioinformatics
