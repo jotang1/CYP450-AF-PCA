@@ -6,15 +6,15 @@ While AF2 provides high-confidence global scaffolds, it frequently fails to reco
 
 ## System Architecture & Pipeline
 The pipeline is optimized for High-Performance Computing (HPC) environments (e.g., Ohio Supercomputer Center) and is divided into three functional layers:
-1. Data Mining & Benchmarking (Python)
-   - get_ids.py: Automated retrieval of 999 UniProtKB Cytochrome P450 identifiers.
-   - build_dataset.py: Core engine for fetching AlphaFold coordinates and cross-referencing against experimental PDB crystal structures. It calculates local pLDDT metrics and geometric RMSD deviations.
-2. Unsupervised Auditing (R)
-   - cyp_pca_pipeline.R: Performs dimensionality reduction (PCA) to decouple global confidence (PC1) from local pocket stability (PC2). Includes Hierarchical Clustering (Ward’s D2) to map the structural taxonomy of the dataset.
-3. Supervised Predictive Modeling (Python/Scikit-Learn)
-   - compare_cyp_models.py: Benchmarks Random Forest, SVM, and KNN classifiers to identify the most accurate predictor of structural failure.
-   - cyp_ml_pipeline.py: Implements the validated Random Forest model and extracts feature importance rankings.
-   - run_knn_discovery.py: The "Discovery Engine" that partitions uncharacterized targets into functional tiers (Consonance vs. Dissonance).
+1. **Data Mining & Benchmarking** (Python)
+   * **get_ids.py**: Automated retrieval of 999 UniProtKB Cytochrome P450 identifiers.
+   * **build_dataset.py**: Core engine for fetching AlphaFold coordinates and cross-referencing against experimental PDB crystal structures. It calculates local pLDDT metrics and geometric RMSD deviations.
+2. **Unsupervised Auditing** (R)
+   * **cyp_pca_pipeline.R**: Performs dimensionality reduction (PCA) to decouple global confidence (PC1) from local pocket stability (PC2). Includes Hierarchical Clustering (Ward’s D2) to map the structural taxonomy of the dataset.
+3. **Supervised Predictive Modeling** (Python/Scikit-Learn)
+   * **compare_cyp_models.py**: Benchmarks Random Forest, SVM, and KNN classifiers to identify the most accurate predictor of structural failure.
+   * **cyp_ml_pipeline.py**: Implements the validated Random Forest model and extracts feature importance rankings.
+   * **run_knn_discovery.py**: The "Discovery Engine" that partitions uncharacterized targets into functional tiers (Consonance vs. Dissonance).
 
 ## Key Findings (999 Target Scan)
 | Structural Phenotype | Count (n=913) | Biophysical Interpretation |
@@ -23,8 +23,16 @@ The pipeline is optimized for High-Performance Computing (HPC) environments (e.g
 | **Transitional Stability** | 326 | Moderate risk; requires conformational relaxation (MD). |
 | **Scaffold-Pocket Divergence** | 124 | **Outlier Phenotype**: Likely structural hallucination. |
 
-  - Pathway A (113 targets): Localized Loop Failures (SRS regions).
-  - Pathway B (11 targets): "Stiff Cage" artifacts; biophysically non-productive geometries.
+### Structural Outlier Phenotypes
+Our PCA-KNN diagnostic identified 124 targets exhibiting **Structural Dissonance**, bifurcating into two distinct pathological trajectories:
+
+* **Pathway A: Stiff Cages (n=113)**
+  * **Metric**: Pocket pLDDT > Global pLDDT (Negative PC2 Divergence).
+  * **Mechanism**: **Hallucinated Rigidity.** In the absence of the heme-thiolate group, the model over-stabilizes the apo-form active site, resulting in a hyper-rigid and non-physical geometry.
+
+* **Pathway B: Loop Failures (n=11)**
+  * **Metric**: Global pLDDT > Pocket pLDDT (Positive PC2 Divergence).
+  * **Mechanism**: **Structural Insecurity.** The substrate recognition sites (SRS) exhibit localized distortion and low confidence, failing to define a stable conformational state without the steric cues of the missing cofactor.
 
 ## Getting Started
 ### Data Availability Note
