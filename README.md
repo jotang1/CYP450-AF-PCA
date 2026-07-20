@@ -1,8 +1,8 @@
 # CYP450-AF-PCA: An Automated Diagnostic Pipeline for AlphaFold Structural Auditing
 ## Project Overview
-CYP450-AF-PCA is a high-throughput computational framework designed to audit the structural reliability of AlphaFold 2 (AF2) predictions within the Cytochrome P450 superfamily.
+CYP450-AF-PCA is a high-throughput computational framework designed to audit the structural reliability of AlphaFold 2 (AF2) predictions within the Cytochrome P450 (CYP450) superfamily.
 
-While AF2 provides high-confidence global scaffolds, it frequently fails to reconcile the structural plasticity of the P450 active site with the volumetric requirements of the heme prosthetic group. This pipeline identifies "Structural Dissonance"—cases where high global confidence masks localized functional failures—using a combination of PCA-driven diagnostics and supervised machine learning.
+While AlphaFold 2 (AF2) provides high-confidence global scaffolds, it frequently fails to reconcile the structural plasticity of the CYP450 active site with the volumetric requirements of the heme prosthetic group. This pipeline identifies "Structural Dissonance"—cases where high global confidence masks localized functional failures—using a combination of PCA-driven diagnostics and supervised machine learning.
 
 ## System Architecture & Pipeline
 The pipeline is optimized for High-Performance Computing (HPC) environments (e.g., Ohio Supercomputer Center) and is divided into three functional layers:
@@ -20,7 +20,7 @@ The pipeline is optimized for High-Performance Computing (HPC) environments (e.g
 | Structural Phenotype | Count (n=913) | Biophysical Interpretation |
 | :--- | :---: | :--- |
 | **Structural Consonance** | 463 | Validated high-fidelity models; scaffold/pocket alignment. |
-| **Transitional Stability** | 326 | Moderate risk; requires conformational relaxation (MD). |
+| **Transitional Stability** | 326 | Moderate stability; requires conformational relaxation (MD). |
 | **Scaffold-Pocket Divergence** | 124 | **Outlier Phenotype**: Likely structural hallucination. |
 
 ### Structural Outlier Phenotypes
@@ -34,10 +34,12 @@ Our PCA-KNN diagnostic identified 124 targets exhibiting **Structural Dissonance
   * **Metric**: Global pLDDT > Pocket pLDDT (Positive PC2 Divergence).
   * **Mechanism**: **Structural Insecurity.** The substrate recognition sites (SRS) exhibit localized distortion and low confidence, failing to define a stable conformational state without the steric cues of the missing cofactor.
 
+The 10:1 ratio of Stiff Cages to Loop Failures suggests that AF2 exhibits a systematic bias toward hallucinated stability in the CYP450 active site.
+
 ## Getting Started
 ### Data Availability Note
   - For academic evaluation, a representative subset (n=20) is provided in sample_data.csv. 
-  - The full benchmarking dataset (n=999) is currently under research embargo pending manuscript submission.
+  - The full benchmarking dataset (n=999) is available upon request.
 ### Prerequisites
   - Python 3.8+: biopython, requests, pandas, scikit-learn, numpy, matplotlib
   - R 4.0+: stats, graphics
@@ -48,5 +50,4 @@ Our PCA-KNN diagnostic identified 124 targets exhibiting **Structural Dissonance
 
 ### Author
 Joseph Tang <br>
-HPC Storage Engineer, Ohio Supercomputer Center <br>
-Specializing in the intersection of HPC Systems and Structural Bioinformatics
+Ohio Supercomputer Center
