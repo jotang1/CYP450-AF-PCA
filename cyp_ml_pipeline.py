@@ -33,7 +33,7 @@ features = ['Pocket_Mean_pLDDT', 'Pocket_Min_pLDDT', 'Global_Mean_pLDDT']
 # =====================================================================
 # PHASE 1 & 2: CALIBRATION & VALIDATION POOL (The 86 Benchmark Proteins)
 # =====================================================================
-# Filter out rows that have real crystal structure answers
+# Filter out rows that have reported crystal structure answers
 df_benchmarks = df.dropna(subset=['Pocket_Distortion_Status']).copy()
 df_benchmarks['Pocket_Distortion_Status'] = df_benchmarks['Pocket_Distortion_Status'].astype(int)
 
@@ -91,5 +91,5 @@ print(f"Scan Complete! Found {len(df_flags)} proteins predicted to be secretly w
 # Export discovery results to a clean CSV report
 output_csv = "alphafold_discovery_predictions.csv"
 df_discovery.to_csv(output_csv, index=False)
-print(f"Clean discovery report exported to '{output_csv}'")
+print(f"Discovery report exported to '{output_csv}'")
 print("="*60)
